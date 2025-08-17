@@ -11,11 +11,6 @@ npm run dev
 ```
 Open in browser → http://localhost:5173
 
-## 📦 Build for Production
-```bash
-npm run build
-npm run preview
-```
 
 ## 🛠 Tech Stack
 - React + Vite ⚡

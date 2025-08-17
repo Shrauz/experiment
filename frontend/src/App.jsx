@@ -1,25 +1,29 @@
-import { Routes, Route, Navigate } from "react-router-dom";
-import Navbar from "./components/Navbar"; // ✅ import navbar
+import { Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Interview from "./pages/Interview";
+import Home from "./pages/Home"; // ✅ new home
 
 export default function App() {
   return (
     <>
-      {/* Navbar will always show, except on Login/Register */}
       <Routes>
+        {/* Public routes */}
         <Route
           path="/"
-          element={<Navigate to="/login" replace />}
+          element={
+            <>
+              <Navbar />
+              <Home />
+            </>
+          }
         />
-        
-        {/* Auth pages (without navbar) */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-        {/* All other pages wrapped with navbar */}
+        {/* Protected-like routes with navbar */}
         <Route
           path="/dashboard"
           element={
