@@ -1,11 +1,22 @@
 # InterviewPrep 🎯
 
-A simple React app for mock interview practice with light/dark mode support.
+A simple React app for mock interview practice.
 
 ## 🚀 Run Locally
 ```bash
-git clone https://github.com/<your-username>/interview-prep.git
-cd interview-prep
+git clone https://github.com/Shrauz/experiment.git
+```
+
+### Run backend:
+```
+cd backend
+pip install -r requirements.txt
+python app.py
+
+```
+## Run frontend:
+```
+cd frontend
 npm install
 npm run dev
 ```
@@ -15,3 +26,5 @@ Open in browser → http://localhost:5173
 ## 🛠 Tech Stack
 - React + Vite ⚡
 - Tailwind CSS (for styling)
+- Flask
+- Ollama

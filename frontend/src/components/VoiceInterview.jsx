@@ -8,6 +8,7 @@ const VoiceInterview = () => {
   const [voices, setVoices] = useState([]);
   const [selectedVoice, setSelectedVoice] = useState(null);
   const [feedback, setFeedback] = useState(""); // LLM feedback
+  const [loading, setLoading] = useState(false); // <-- loader state
   const recognitionRef = useRef(null);
 
   // Load available voices on mount
@@ -75,9 +76,11 @@ const VoiceInterview = () => {
     }
   };
 
-  // Send answer to backend LLM API
+  // Send answer to backend LLM API (Ollama)
   const getFeedback = async (userAnswer) => {
     try {
+      setLoading(true); // <-- start loader
+      setFeedback(""); // clear previous feedback
       const response = await fetch("http://localhost:5000/api/feedback", {
         method: "POST",
         headers: {
@@ -91,6 +94,8 @@ const VoiceInterview = () => {
     } catch (error) {
       console.error("Error fetching feedback:", error);
       setFeedback("⚠️ Could not fetch feedback.");
+    } finally {
+      setLoading(false); // <-- stop loader
     }
   };
 
@@ -119,10 +124,18 @@ const VoiceInterview = () => {
         <button className="btn primary" onClick={speakQuestion}>
           🔊 Hear Question
         </button>
-        <button className="btn secondary" onClick={startListening} disabled={listening}>
+        <button
+          className="btn secondary"
+          onClick={startListening}
+          disabled={listening}
+        >
           🎤 Start Answering
         </button>
-        <button className="btn danger" onClick={stopListening} disabled={!listening}>
+        <button
+          className="btn danger"
+          onClick={stopListening}
+          disabled={!listening}
+        >
           ⏹ Stop
         </button>
       </div>
@@ -144,7 +157,15 @@ const VoiceInterview = () => {
         </div>
       )}
 
-      {feedback && (
+      {/* Loader while fetching */}
+      {loading && (
+        <div className="loader" style={{ marginTop: "15px", fontStyle: "italic" }}>
+          ⏳ Fetching feedback...
+        </div>
+      )}
+
+      {/* AI Feedback */}
+      {feedback && !loading && (
         <div className="ai-feedback">
           <h3>💡 AI Feedback:</h3>
           <p>{feedback}</p>
