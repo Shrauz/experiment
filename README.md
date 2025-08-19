@@ -28,3 +28,17 @@ Open in browser → http://localhost:5173
 - Tailwind CSS (for styling)
 - Flask
 - Ollama
+
+
+### Installed tailwind by using 
+```
+npm install -D tailwindcss @tailwindcss/vite
+
+```
+
+### Added this to vite.config.js
+```
+import tailwindcss from '@tailwindcss/vite'
+tailwindcss()
+
+```
