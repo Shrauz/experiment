@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS
 from app.extensions import db, bcrypt, jwt
 from app.routes.auth import auth_bp
 
@@ -13,6 +14,10 @@ def create_app():
     db.init_app(app)
     bcrypt.init_app(app)
     jwt.init_app(app)
+    
+    # Enable CORS for frontend (Vite runs on port 5173 by default)
+    CORS(app) #, resources={r"/api/*": {"origins": "http://localhost:5173"}}
+
 
     # Register blueprints
     app.register_blueprint(auth_bp)

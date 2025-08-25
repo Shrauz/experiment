@@ -6,11 +6,31 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    localStorage.setItem("token", "dummy-token");
-    navigate("/dashboard");
+async function handleSubmit(e) {
+  e.preventDefault();
+
+  try {
+    const response = await fetch("http://127.0.0.1:5000/api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      // ✅ save real token returned by Flask
+      localStorage.setItem("token", data.access_token);
+      navigate("/dashboard");
+    } else {
+      alert(data.msg || "Login failed");
+    }
+  } catch (err) {
+    console.error(err);
+    alert("Something went wrong");
   }
+}
+
 
   return (
     <div className="page-container">
@@ -26,11 +46,7 @@ export default function Login() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            style={{
-              padding: "10px",
-              borderRadius: "8px",
-              border: "1px solid #ccc",
-            }}
+            className="form-input"
           />
           <input
             placeholder="Password"
@@ -38,11 +54,7 @@ export default function Login() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            style={{
-              padding: "10px",
-              borderRadius: "8px",
-              border: "1px solid #ccc",
-            }}
+            className="form-input"
           />
           <button type="submit">Sign in</button>
         </form>

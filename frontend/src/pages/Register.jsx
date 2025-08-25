@@ -2,14 +2,36 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function Register() {
-  const [name, setName] = useState("");
+  const [username, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    navigate("/login");
+    setError("");
+
+    try {
+      const res = await fetch("http://127.0.0.1:5000/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, email, password }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.msg || "Registration failed");
+        return;
+      }
+
+      navigate("/login");
+    } catch (err) {
+      setError("Something went wrong. Try again.");
+    }
   }
 
   return (
@@ -21,19 +43,19 @@ export default function Register() {
           style={{ display: "grid", gap: 12, textAlign: "left" }}
         >
           <input
-            placeholder="Full name"
-            value={name}
+            placeholder="Username:"
+            value={username}
             onChange={(e) => setName(e.target.value)}
             required
-            style={{ padding: "10px", borderRadius: "8px", border: "1px solid #ccc" }}
+            className="form-input"
           />
           <input
-            placeholder="Email"
+            placeholder="Email:"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            style={{ padding: "10px", borderRadius: "8px", border: "1px solid #ccc" }}
+            className="form-input"
           />
           <input
             placeholder="Password"
@@ -41,10 +63,11 @@ export default function Register() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            style={{ padding: "10px", borderRadius: "8px", border: "1px solid #ccc" }}
+            className="form-input"
           />
           <button type="submit">Register</button>
         </form>
+        {error && <p style={{ color: "red" }}>{error}</p>}
         <p style={{ marginTop: 16 }}>
           Already have an account? <Link to="/login">Login</Link>
         </p>
@@ -52,4 +75,3 @@ export default function Register() {
     </div>
   );
 }
-
