@@ -248,3 +248,25 @@ body.dark .navbar {
   border-color: var(--accent);
   box-shadow: 0 0 0 3px rgba(0, 119, 255, 0.3);
 }
+
+/* ✅ Mini Navbar fixed at top */
+.mini-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50px; /* adjust as you like */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+  z-index: 1000; /* stays above other elements */
+  margin-right: 10px;
+}
+
+/* ✅ Ensure page content starts below navbar */
+.page-container {
+  padding-top: 60px; /* slightly bigger than navbar height */
+}
+
+

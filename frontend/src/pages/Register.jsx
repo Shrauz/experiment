@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import ThemeToggle from "../components/ThemeToggle"; // ✅ existing theme toggle
 
 export default function Register() {
   const [username, setName] = useState("");
@@ -36,6 +37,12 @@ export default function Register() {
 
   return (
     <div className="page-container">
+      <div className="mini-navbar">
+              <span onClick={() => navigate("/")} title="Home">
+                🏠 Home
+              </span>
+              <ThemeToggle />
+      </div>
       <div className="card">
         <h1 style={{ marginBottom: 16 }}>Create Account</h1>
         <form
