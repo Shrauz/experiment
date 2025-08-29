@@ -2,6 +2,7 @@ from flask import Flask
 from flask_cors import CORS
 from app.extensions import db, bcrypt, jwt
 from app.routes.auth import auth_bp
+from .routes.feedback import feedback_bp
 
 def create_app():
     app = Flask(__name__)
@@ -21,5 +22,6 @@ def create_app():
 
     # Register blueprints
     app.register_blueprint(auth_bp)
+    app.register_blueprint(feedback_bp)
 
     return app
