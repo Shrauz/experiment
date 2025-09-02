@@ -15,7 +15,7 @@ export default function Home() {
             <button>Login</button>
           </Link>
           <Link to="/register">
-            <button>Register</button>
+            <button>Regisster</button>
           </Link>
         </div>
       </div>
