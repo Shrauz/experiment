@@ -1,27 +1,35 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function ThemeToggle() {
-  const [dark, setDark] = useState(false);
+  const [darkMode, setDarkMode] = useState(
+    () => localStorage.getItem("theme") === "dark"
+  );
 
-  // Load saved theme on first render
   useEffect(() => {
-    const saved = localStorage.getItem("theme");
-    if (saved) {
-      setDark(saved === "dark");
-      document.body.className = saved;
+    if (darkMode) {
+      document.documentElement.style.backgroundColor = "#1C1C1C";
+      document.documentElement.style.color = "white";
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.documentElement.style.backgroundColor = "#ffffff";
+      document.documentElement.style.color = "#1C1C1C";
+      localStorage.setItem("theme", "light");
     }
-  }, []);
-
-  // Update body + save when dark changes
-  useEffect(() => {
-    const theme = dark ? "dark" : "light";
-    document.body.className = theme;
-    localStorage.setItem("theme", theme);
-  }, [dark]);
+  }, [darkMode]);
 
   return (
-    <button onClick={() => setDark(!dark)}>
-      {dark ? "🌙" : "☀️"}
+    <button
+      onClick={() => setDarkMode(!darkMode)}
+      style={{
+        background: "none",
+        border: "none",
+        cursor: "pointer",
+        fontSize: "1.2rem",
+        transition: "opacity 0.3s ease",
+        color: "inherit",
+      }}
+    >
+      {darkMode ? "☀️" : "🌙"}
     </button>
   );
 }
