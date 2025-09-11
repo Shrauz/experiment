@@ -4,6 +4,8 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Interview from "./pages/Interview";
+import InterviewGenerator from "./pages/InterviewGenerator";
+import GenerateInterview from "./pages/GenerateInterview";
 import Home from "./pages/Home"; // ✅ new home
 
 export default function App() {
@@ -39,6 +41,15 @@ export default function App() {
             <>
               <Navbar />
               <Interview />
+            </>
+          }
+        />
+        <Route
+          path="/generate-interview"
+          element={
+            <>
+              <Navbar />
+              <GenerateInterview />
             </>
           }
         />

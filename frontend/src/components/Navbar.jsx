@@ -21,6 +21,8 @@ export default function Navbar() {
         {token && <Link to="/dashboard">Dashboard</Link>}
         {!token && <Link to="/login">Login</Link>}
         {!token && <Link to="/register">Register</Link>}
+        {token && <Link to="/generate-interview">Generate Interview</Link>}
+
         <Link to="/interview">Mock Interview</Link>
         {token && (
           <button
