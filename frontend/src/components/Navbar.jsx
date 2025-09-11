@@ -19,11 +19,30 @@ export default function Navbar() {
         <span />
       </button>
 
-      {/* Overlay */}
-      <div
-        className={`overlay ${isOpen ? "show" : ""}`}
-        onClick={() => setIsOpen(false)}
-      />
+      <div className="nav-links">
+        <Link to="/">Home</Link>
+        {token && <Link to="/dashboard">Dashboard</Link>}
+        {!token && <Link to="/login">Login</Link>}
+        {!token && <Link to="/register">Register</Link>}
+        {token && <Link to="/generate-interview">Generate Interview</Link>}
+
+        <Link to="/interview">Mock Interview</Link>
+        {token && (
+          <button
+            onClick={logout}
+            style={{
+              background: "none",
+              border: "none",
+              cursor: "pointer",
+              color: "inherit",
+              fontSize: "inherit",
+              padding: 0,
+            }}
+          >
+            Logout
+          </button>
+        )}
+      </div>
 
       {/* Slide-out Menu */}
       <div className={`menu ${isOpen ? "open" : ""}`}>
