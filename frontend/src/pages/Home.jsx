@@ -30,6 +30,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+  
 
       {/* SECTION 2 → Black background, two-column (title left, text right) */}
       <section className="page-section black-section compact">
