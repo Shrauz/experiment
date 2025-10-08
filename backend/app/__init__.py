@@ -5,6 +5,8 @@ from app.routes.auth import auth_bp
 from .routes.feedback import feedback_bp
 from .routes.generate import interview_bp
 from .routes.dashboard import dashboard_bp
+from .routes.feedback import feedback_bp
+
 
 def create_app():
     app = Flask(__name__)
@@ -19,13 +21,14 @@ def create_app():
     jwt.init_app(app)
     
     # Enable CORS for frontend (Vite runs on port 5173 by default)
-    CORS(app) #, resources={r"/api/*": {"origins": "http://localhost:5173"}}
-
-
+    # CORS(app) #, resources={r"/api/*": {"origins": "http://localhost:5173"}}
+    # CORS(app, resources={r"/api/*": {"origins": "http://localhost:5173"}}, supports_credentials=True)
+    CORS(app, origins=["http://localhost:5173"], supports_credentials=True)
     # Register blueprints
     app.register_blueprint(auth_bp)
     app.register_blueprint(feedback_bp)
     app.register_blueprint(interview_bp)
     app.register_blueprint(dashboard_bp)
+    
 
     return app
