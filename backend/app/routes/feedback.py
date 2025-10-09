@@ -14,7 +14,7 @@ feedback_bp = Blueprint("feedback", __name__, url_prefix="/api/feedback")
 
 # Configure Gemini API (can be set via env var, fallback to hardcoded key)
 genai.configure(api_key=os.environ.get("GEMINI_API_KEY", "AIzaSyCAN__m_YzXOzlkESPIhShUlanuTBceGvI"))
-gemini_model = genai.GenerativeModel("gemini-pro")
+gemini_model = genai.GenerativeModel("models/gemini-2.5-pro")
 
 # Load HuggingFace models
 sentiment_analyzer = pipeline("sentiment-analysis")
