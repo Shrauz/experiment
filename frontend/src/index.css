@@ -2,125 +2,352 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Global body styles */
-body {
-  @apply bg-black text-white font-sans cursor-default;
-}
 
-body.light {
-  @apply bg-gray-100 text-gray-900;
-}
-
-body.dark {
-  @apply bg-black text-white;
-}
-
-/* Smooth transitions for colors and backgrounds */
+/* Reset */
 * {
-  transition: all 0.2s ease-in-out;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
 }
 
-/* Page container spacing */
+html, body, #root {
+  height: 100%;
+  width: 100%;
+}
+
+/* Light mode */
+body.light {
+  background: #f5f5f5;
+  color: #111;
+}
+
+/* Dark mode */
+body.dark {
+  background: #1a1a1a;
+  color: #eee;
+}
+
 .page-container {
-  @apply pt-20; /* space for sticky navbar */
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-/* Navbar styling */
-.navbar {
-  @apply fixed top-0 left-0 w-full bg-black shadow-lg z-50;
+.form-input {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc
 }
 
-.navbar-inner {
-  @apply max-w-7xl mx-auto px-6 lg:px-8 flex justify-between items-center h-16;
+.card {
+  text-align: center;
+  padding: 24px;
+  border: 1px solid #444;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.9);
+  min-width: 300px;
 }
 
-.nav-logo {
-  @apply text-2xl font-extrabold tracking-wider;
+body.dark .card {
+  background: rgba(30, 30, 30, 0.9);
+  border: 1px solid #666;
 }
 
-.nav-links {
-  @apply flex items-center space-x-6;
-}
-
-.nav-links a {
-  @apply text-white font-medium transition-colors duration-200 hover:text-indigo-400;
-}
-
-.nav-links button {
-  @apply text-white font-medium transition-colors duration-200 hover:text-red-400 bg-transparent border-none;
-}
-
-/* Buttons */
 button {
-  @apply px-4 py-2 rounded-md cursor-pointer bg-indigo-600 text-white hover:bg-indigo-700 transition;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background: #4f46e5;
+  color: white;
+  transition: 0.2s;
+}
+
+button:hover {
+  background: #4338ca;
 }
 
 a {
-  @apply transition hover:text-indigo-500;
+  color: #4f46e5;
+  text-decoration: none;
 }
 
-/* Smooth scrolling */
-html {
-  scroll-behavior: smooth;
+a:hover {
+  text-decoration: underline;
 }
 
-/* Video overlay */
-video {
-  pointer-events: none; /* prevent accidental clicks */
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px;
+  background: #ffffffcc;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid #ddd;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
-/* Drop shadow utility for headings */
-.drop-shadow-lg {
-  text-shadow: 0 6px 24px rgba(0,0,0,0.5);
+body.dark .navbar {
+  background: #222222cc;
+  border-bottom: 1px solid #444;
 }
 
-body.light {
-  @apply bg-gray-100 text-gray-900;
+.logo {
+  font-size: 20px;
+  font-weight: bold;
 }
 
-body.dark {
-  @apply bg-black text-white;
+.nav-links {
+  display: flex;
+  gap: 16px;
 }
 
-/* Video overlays and cursor fix */
-.video-overlay {
-  @apply absolute inset-0 w-full h-full object-cover brightness-50 pointer-events-none cursor-default;
+.nav-links a {
+  color: inherit;
+  font-weight: 500;
+  transition: 0.2s;
 }
 
-/* Hero text animations */
-.hero-text {
-  @apply z-10 text-center max-w-3xl px-5;
-  transition: transform 0.3s ease, opacity 0.3s ease;
+.nav-links a:hover {
+  color: #4f46e5;
 }
 
-/* Button improvements */
-.btn-primary {
-  @apply px-6 py-3 rounded-full font-bold text-white bg-gradient-to-b from-purple-700 to-purple-900 shadow-lg hover:scale-105 transform transition;
+/* Reusable page wrapper */
+.page {
+  max-width: 720px;
+  margin: 40px auto;
+  padding: 16px;
 }
 
-.btn-secondary {
-  @apply px-6 py-3 rounded-full font-bold text-white border border-white/20 hover:bg-white/10 transform transition;
+/* Headings */
+.page-title {
+  font-size: 1.8rem;
+  margin-bottom: 12px;
 }
 
-/* Section info styling */
-.info-title {
-  @apply flex-1 font-bold uppercase text-white tracking-wider text-xl md:text-2xl mb-4 md:mb-0;
+/* Question text */
+.question {
+  margin-top: 8px;
+  font-size: 1.1rem;
 }
 
-.info-text {
-  @apply flex-2 font-serif text-gray-200 text-base md:text-lg leading-relaxed;
+/* Form styling */
+.answer-form {
+  display: grid;
+  gap: 12px;
+  margin-top: 12px;
 }
 
-/* Section spacing */
-.page-section {
-  @apply relative min-h-screen flex flex-col justify-center items-center text-center;
+.answer-form textarea {
+  width: 100%;
+  resize: vertical;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border, #ccc);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 1rem;
 }
 
-.page-section.compact {
-  @apply min-h-auto py-24 px-5;
+/* Buttons */
+.form-buttons {
+  display: flex;
+  gap: 8px;
 }
 
-/* Drop shadows for headings over video */
-.drop-shadow-lg {
-  text-shadow: 0 6px 24px rgba(0,0,0,0.5);
+.btn {
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  border: none;
+  transition: background 0.2s;
+}
+
+.btn.primary {
+  background: var(--accent, #0077ff);
+  color: white;
+}
+
+.btn.primary:hover {
+  background: #005fcc;
+}
+
+.btn.secondary {
+  background: #eee;
+  color: #333;
+}
+
+.btn.secondary:hover {
+  background: #ddd;
+}
+
+/* Feedback box */
+.feedback {
+  margin-top: 12px;
+  padding: 10px;
+  border-left: 4px solid var(--accent, #0077ff);
+  background: var(--bg-light, var(--bg)); /* ✅ fixes dark mode */
+  color: var(--text);
+  border-radius: 4px;
+}
+
+:root {
+  --bg: #ffffff;
+  --text: #222222;
+  --accent: #0077ff;
+  --bg-light: #f9f9f9;   /* light mode feedback bg */
+}
+
+.dark {
+  --bg: #121212;
+  --text: #f5f5f5;
+  --accent: #4a90e2;
+  --bg-light: #1e1e1e;   /* dark mode feedback bg */
+}
+
+/* Voice selector dropdown */
+.voice-selector {
+  margin: 16px 0; /* spacing above/below */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.voice-selector label {
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.voice-selector select {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.voice-selector select:hover {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(0, 119, 255, 0.2);
+}
+
+.voice-selector select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(0, 119, 255, 0.3);
+}
+
+/* ✅ Mini Navbar fixed at top */
+.mini-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50px; /* adjust as you like */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+  z-index: 1000; /* stays above other elements */
+  margin-right: 10px;
+}
+
+/* ✅ Ensure page content starts below navbar */
+.page-container {
+  padding-top: 60px; /* slightly bigger than navbar height */
+}
+
+
+body {
+  background-color: #000000;
+  font-family: 'Inter', sans-serif;
+  color: #EFEFEF;
+  cursor: crosshair;
+}
+
+.full-screen-section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.top-left-logo {
+  position: absolute;
+  top: 3rem;
+  left: 3rem;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 1.25rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  z-index: 20;
+}
+
+.prompt-heading {
+  font-family: 'Source Serif Pro', serif;
+  font-weight: 400;
+  font-size: clamp(3rem, 10vw, 6rem);
+  line-height: 1.2;
+  color: #FFFFFF;
+}
+
+.prompt-subheading {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(1rem, 3vw, 1.5rem);
+  color: #888;
+  margin-top: 1rem;
+}
+
+/* Particle Background */
+.matrix-zoom-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  perspective: 300px;
+  transform-style: preserve-3d;
+}
+
+.particle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: #9400D3;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #DA70D6, 0 0 15px #EE82EE;
+  animation: zoom 8s infinite linear;
+}
+
+@keyframes zoom {
+  from {
+    transform: translateZ(-100px);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  to {
+    transform: translateZ(300px);
+    opacity: 0;
+  }
 }
