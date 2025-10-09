@@ -200,29 +200,15 @@ def feedback():
                 print(f"Audio decode error: {e}")
 
         analysis = voice_analyzer.analyze_speech_comprehensive(answer, audio_np, sr)
+
         prompt = f"""
-    try:
-        data = request.get_json()
-        question = data.get("question", "")
-        answer = data.get("answer", "")
-        audio_data = data.get("audio_data")
+You are an interviewer.
+Interview Question: {question}
+Candidate's Answer: {answer}
 
-        audio_np, sr = None, None
-        if audio_data:
-            try:
-                audio_np, sr = decode_audio(audio_data)
-            except Exception as e:
-                print(f"Audio decode error: {e}")
-
-        analysis = voice_analyzer.analyze_speech_comprehensive(answer, audio_np, sr)
-        prompt = f"""
-        You are an interviewer.
-        Interview Question: {question}
-        Candidate's Answer: {answer}
-
-        Give opinion in ONE sentence.
-        Be specific and constructive.
-        """
+Give opinion in ONE sentence.
+Be specific and constructive.
+"""
         feedback_text = get_feedback_from_gemini(prompt)
 
         return jsonify({"feedback": feedback_text, "analysis": analysis})
@@ -258,6 +244,7 @@ Please:
 
 Format your answer clearly.
 """
+
     summary = get_feedback_from_gemini(prompt)
     session["interview_session"] = []
     session.modified = True
