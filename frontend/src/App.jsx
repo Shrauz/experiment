@@ -3,10 +3,12 @@ import Navbar from "./components/Navbar";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
-import Interview from "./pages/Interview";
+import UserInterviews from "./pages/UserInterviews"; // ✅ new page
+import VoiceInterview from "./components/VoiceInterview"; // Interview page
 import InterviewGenerator from "./pages/InterviewGenerator";
 import GenerateInterview from "./pages/GenerateInterview";
-import Home from "./pages/Home"; // ✅ new home
+import Home from "./pages/Home";
+import TakeInterview from "./pages/TakeInterview";
 
 export default function App() {
   return (
@@ -36,11 +38,20 @@ export default function App() {
           }
         />
         <Route
+          path="/my-interviews"
+          element={
+            <>
+              <Navbar />
+              <UserInterviews />
+            </>
+          }
+        />
+        <Route
           path="/interview"
           element={
             <>
               <Navbar />
-              <Interview />
+              <VoiceInterview />
             </>
           }
         />
@@ -53,6 +64,16 @@ export default function App() {
             </>
           }
         />
+        <Route
+          path="/take-interview"
+          element={
+            <>
+              <Navbar />
+              <TakeInterview />
+            </>
+          }
+        />
+
 
         {/* Catch-all */}
         <Route path="*" element={<div style={{ padding: 24 }}>Not Found</div>} />

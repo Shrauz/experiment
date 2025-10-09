@@ -1,35 +1,26 @@
-import { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function ThemeToggle() {
-  const [darkMode, setDarkMode] = useState(
-    () => localStorage.getItem("theme") === "dark"
+  const [theme, setTheme] = useState(
+    localStorage.getItem("theme") || "dark"
   );
 
   useEffect(() => {
-    if (darkMode) {
-      document.documentElement.style.backgroundColor = "#1C1C1C";
-      document.documentElement.style.color = "white";
-      localStorage.setItem("theme", "dark");
-    } else {
-      document.documentElement.style.backgroundColor = "#ffffff";
-      document.documentElement.style.color = "#1C1C1C";
-      localStorage.setItem("theme", "light");
-    }
-  }, [darkMode]);
+    document.body.classList.remove("light", "dark");
+    document.body.classList.add(theme);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  function toggleTheme() {
+    setTheme(theme === "dark" ? "light" : "dark");
+  }
 
   return (
     <button
-      onClick={() => setDarkMode(!darkMode)}
-      style={{
-        background: "none",
-        border: "none",
-        cursor: "pointer",
-        fontSize: "1.2rem",
-        transition: "opacity 0.3s ease",
-        color: "inherit",
-      }}
+      onClick={toggleTheme}
+      className="px-3 py-1 rounded-md bg-indigo-600 hover:bg-indigo-700 text-white transition"
     >
-      {darkMode ? "☀️" : "🌙"}
+      {theme === "dark" ? "Light Mode" : "Dark Mode"}
     </button>
   );
 }
