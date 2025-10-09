@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import "./Home.css";
+
 
 export default function Home() {
   useEffect(() => {
@@ -30,7 +30,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-  
 
       {/* SECTION 2 → Black background, two-column (title left, text right) */}
       <section className="page-section black-section compact">

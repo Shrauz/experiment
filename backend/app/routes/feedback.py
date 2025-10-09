@@ -7,15 +7,16 @@ import time
 import librosa
 import google.generativeai as genai
 from flask import Blueprint, request, jsonify, session
+from flask_cors import cross_origin
 from transformers import pipeline
 
 feedback_bp = Blueprint("feedback", __name__, url_prefix="/api/feedback")
 
-# Configure Gemini API (hardcoded for now)
-genai.configure(api_key="AIzaSyCAN__m_YzXOzlkESPIhShUlanuTBceGvI")
-gemini_model = genai.GenerativeModel("gemini-pro")
+# Configure Gemini API (can be set via env var, fallback to hardcoded key)
+genai.configure(api_key=os.environ.get("GEMINI_API_KEY", "AIzaSyCAN__m_YzXOzlkESPIhShUlanuTBceGvI"))
+gemini_model = genai.GenerativeModel("models/gemini-2.5-pro")
 
-# Load Hugging Face models
+# Load HuggingFace models
 sentiment_analyzer = pipeline("sentiment-analysis")
 emotion_analyzer = pipeline(
     "text-classification",
@@ -161,7 +162,6 @@ def decode_audio(audio_base64):
 
 voice_analyzer = VoiceAnalyzer()
 
-
 def get_feedback_from_gemini(prompt):
     try:
         response = gemini_model.generate_content(prompt)
@@ -182,9 +182,9 @@ def to_python_type(val):
         return val.tolist()
     return val
 
-
 # --- Routes ---
 @feedback_bp.route("/", methods=["POST"])
+@cross_origin()
 def feedback():
     try:
         data = request.get_json()
@@ -200,14 +200,15 @@ def feedback():
                 print(f"Audio decode error: {e}")
 
         analysis = voice_analyzer.analyze_speech_comprehensive(answer, audio_np, sr)
-        prompt = f"""
-        You are an interviewer.
-        Interview Question: {question}
-        Candidate's Answer: {answer}
 
-        Give opinion in ONE sentence.
-        Be specific and constructive.
-        """
+        prompt = f"""
+You are an interviewer.
+Interview Question: {question}
+Candidate's Answer: {answer}
+
+Give opinion in ONE sentence.
+Be specific and constructive.
+"""
         feedback_text = get_feedback_from_gemini(prompt)
 
         return jsonify({"feedback": feedback_text, "analysis": analysis})
@@ -217,6 +218,7 @@ def feedback():
 
 
 @feedback_bp.route("/session-summary", methods=["POST"])
+@cross_origin()
 def session_summary():
     session_data = session.get("interview_session", [])
     if not session_data:
@@ -242,6 +244,7 @@ Please:
 
 Format your answer clearly.
 """
+
     summary = get_feedback_from_gemini(prompt)
     session["interview_session"] = []
     session.modified = True
@@ -249,6 +252,7 @@ Format your answer clearly.
 
 
 @feedback_bp.route("/health", methods=["GET"])
+@cross_origin()
 def health_check():
     return jsonify({
         "status": "healthy",
@@ -260,6 +264,7 @@ def health_check():
 
 
 @feedback_bp.route("/gemini-test", methods=["GET"])
+@cross_origin()
 def gemini_test():
     try:
         resp = gemini_model.generate_content("Say hello world")
