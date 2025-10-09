@@ -1,0 +1,239 @@
+/* overall */
+.home {
+  position: relative;
+  width: 100%;
+  scroll-behavior: smooth;
+  font-family: "Inter", sans-serif;
+  color: #fff;
+}
+
+/* each section fills viewport (default) */
+.page-section {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+/* compact sections (for 2nd & 4th) */
+.page-section.compact {
+  min-height: auto;
+  padding: 100px 0; /* gives breathing space but not full screen */
+}
+
+/* background video */
+.background-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+  filter: brightness(0.45);
+  pointer-events: none;
+}
+
+/* black background sections */
+.black-section {
+  background-color: #000;
+}
+
+/* site title top-left */
+.site-title {
+  position: absolute;
+  top: 20px;
+  left: 28px;
+  z-index: 2;
+  font-size: clamp(1.1rem, 2.2vw, 1.6rem);
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* hero (first page only) */
+.center-hero {
+  z-index: 2;
+  max-width: 1000px;
+  padding: 0 1.25rem;
+}
+
+.hero-heading {
+  margin: 0;
+  font-family: "Source Serif Pro", serif;
+  font-size: clamp(2.8rem, 8vw, 5.6rem);
+  line-height: 1.02;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  text-shadow: 0 6px 24px rgba(0,0,0,0.6);
+}
+
+.tagline {
+  margin-top: 0.9rem;
+  color: #cfcfcf;
+  font-size: clamp(0.95rem, 2.2vw, 1.25rem);
+  font-weight: 500;
+}
+
+/* buttons row */
+.hero-buttons {
+  margin-top: 1.6rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 22px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.95rem;
+  transition: transform 0.14s ease, box-shadow 0.14s ease;
+  color: #ffffff;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.btn.primary {
+  background: linear-gradient(180deg,#7C2AE8,#5A0FB8);
+  border: none;
+  box-shadow: 0 8px 28px rgba(92,38,201,0.18);
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.45);
+}
+
+/* shared text for video sections */
+.center-text {
+  z-index: 2;
+  max-width: 900px;
+  padding: 0 1.25rem;
+}
+
+.story-heading {
+  font-family: "Source Serif Pro", serif;
+  font-weight: 400;
+  font-size: clamp(2rem, 6vw, 3.6rem);
+  line-height: 1.2;
+  color: #ffffff;
+  text-shadow: 0 6px 24px rgba(0,0,0,0.5);
+}
+
+/* info sections (2 and 4) */
+.info-container {
+  z-index: 2;
+  max-width: 1200px;
+  padding: 60px 80px;
+  display: flex;
+  gap: 60px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* two-column layout */
+.two-column {
+  flex-direction: row;
+  text-align: left;
+}
+
+.two-column.reverse {
+  flex-direction: row-reverse;
+  text-align: right;
+}
+
+.info-title {
+  flex: 1;
+  font-family: "Inter", sans-serif;
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  margin: 0;
+  color: #ffffff;
+  position: relative;
+  cursor: default;
+  transition: color 0.3s ease;
+}
+
+.info-title::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0%;
+  height: 2px;
+  background-color: #ffffff;
+  transition: width 0.3s ease;
+}
+
+.two-column.reverse .info-title::after {
+  left: auto;
+  right: 0;
+}
+
+.info-title:hover {
+  color: #bbbbbb;
+}
+
+.info-title:hover::after {
+  width: 100%;
+}
+
+.info-text {
+  flex: 2;
+  max-width: 680px;
+  font-family: "Source Serif Pro", serif;
+  font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+  line-height: 1.65;
+  color: #e0e0e0;
+  font-weight: 400;
+}
+
+/* premium feel (smaller size for sections 2 & 4) */
+.info-text--enhanced {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  font-weight: 500;
+  line-height: 1.6;
+  color: #f3efe7;
+  letter-spacing: -0.01em;
+}
+
+/* responsive */
+@media (max-width: 768px) {
+  .info-container {
+    flex-direction: column !important;
+    text-align: left !important;
+    gap: 30px;
+    padding: 40px 20px;
+  }
+
+  .info-title {
+    text-align: left !important;
+  }
+
+  .info-text {
+    max-width: 100%;
+    font-size: 1rem;
+  }
+
+  .info-text--enhanced {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+}
+
+@media (max-width: 640px) {
+  .site-title { left: 16px; top: 12px; font-size: 1rem; }
+  .hero-heading { font-size: clamp(2rem, 9vw, 3.2rem); }
+  .hero-buttons { gap: 0.6rem; flex-wrap: wrap; }
+  .btn { padding: 9px 16px; font-size: 0.9rem; }
+}

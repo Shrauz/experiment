@@ -201,6 +201,21 @@ def feedback():
 
         analysis = voice_analyzer.analyze_speech_comprehensive(answer, audio_np, sr)
         prompt = f"""
+    try:
+        data = request.get_json()
+        question = data.get("question", "")
+        answer = data.get("answer", "")
+        audio_data = data.get("audio_data")
+
+        audio_np, sr = None, None
+        if audio_data:
+            try:
+                audio_np, sr = decode_audio(audio_data)
+            except Exception as e:
+                print(f"Audio decode error: {e}")
+
+        analysis = voice_analyzer.analyze_speech_comprehensive(answer, audio_np, sr)
+        prompt = f"""
         You are an interviewer.
         Interview Question: {question}
         Candidate's Answer: {answer}

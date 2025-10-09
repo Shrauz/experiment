@@ -1,6 +1,17 @@
 import React, { useState, useRef, useEffect } from "react";
 
 const VoiceInterview = () => {
+  const [question] = useState("Tell me about yourself.");
+  const [answer, setAnswer] = useState("");
+  const [listening, setListening] = useState(false);
+  const [status, setStatus] = useState("Not Recording");
+  const [voices, setVoices] = useState([]);
+  const [selectedVoice, setSelectedVoice] = useState(null);
+  const [feedback, setFeedback] = useState("");
+  const [analysis, setAnalysis] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [realTimeAnalysis, setRealTimeAnalysis] = useState(null);
+  const recognitionRef = useRef(null);
   const [question] = useState("Tell me about yourself.");
   const [answer, setAnswer] = useState("");
   const [listening, setListening] = useState(false);

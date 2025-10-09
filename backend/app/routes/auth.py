@@ -51,3 +51,13 @@ def protected():
 
     return {"msg": f"Hello, {user.username} ({user.email})!"}, 200
 
+
+from flask_jwt_extended import JWTManager
+
+jwt = JWTManager()
+
+@jwt.unauthorized_loader
+def unauthorized_callback(callback):
+    return jsonify({"error": "Missing Authorization Header"}), 401
+
+
